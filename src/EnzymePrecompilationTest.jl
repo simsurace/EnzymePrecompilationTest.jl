@@ -6,7 +6,7 @@ using SnoopPrecompile
 export myfunction, gradient
 
 myfunction(θ) = θ.α^2
-gradient(f, θ) = only(autodiff(Reverse, f, Active(θ)))
+gradient(f, θ) = only(only(autodiff(Reverse, f, Active(θ))))
 
 @precompile_setup begin
     θ = (α = 1.0,)
