@@ -1,16 +1,16 @@
 module EnzymePrecompilationTest
 
 using Enzyme
-using SnoopPrecompile
+using PrecompileTools
 
 export myfunction, gradient
 
 myfunction(θ) = θ.α^2
 gradient(f, θ) = only(only(autodiff(Reverse, f, Active(θ))))
 
-@precompile_setup begin
+@setup_workload begin
     θ = (α = 1.0,)
-    @precompile_all_calls begin
+    @compile_workload begin
         @info gradient(myfunction, θ)
     end
 end
